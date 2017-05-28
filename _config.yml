@@ -1,0 +1,5 @@
+title: OCaml Function Signatures
+
+# Build settings
+markdown: kramdown
+exclude: ['Gemfile', 'Gemfile.lock', 'build']
