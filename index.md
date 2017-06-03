@@ -121,7 +121,7 @@ val succ : ?x : int -> int
 let succ ?x:(y : int = 0) = y + 1
 ```
 
-Universally quantified type:
+Locally abstract type (monomorphic):
 
 ```ocaml
 val foo : 'a -> unit
@@ -138,17 +138,20 @@ val foo : 'a My_gadt.t -> unit
 let foo (type a) (x : a My_gadt.t) = ignore x
 ```
 
-Sometimes you want to recurse within such a function with your type variable
-unifying with a different type in the recursive call. For some reason that is
-not allowed with the above signature. You must write instead:
+[See here for more information.][monomorphic]
+
+Locally abstract type (polymorphic):
 
 ```ocaml
 val foo : 'a My_gadt.t -> unit
 
-let rec foo : type a. a My_gadt.t -> unit =
+let foo : type a. a My_gadt.t -> unit =
   fun x -> ignore x
 ```
 
-This is useful when you have recursive GADTs where the "fields" in a value do
-not necessarily have the same type (with regard to the phantom) as the value
-itself.
+This is useful when you have a recursive GADT where the components of a value
+have a different phantom type than the value
+itself. [See here for more information.][polymorphic]
+
+[monomorphic]: https://caml.inria.fr/pub/docs/manual-ocaml/extn.html#sec228
+[polymorphic]: https://caml.inria.fr/pub/docs/manual-ocaml/extn.html#s%3Agadts
